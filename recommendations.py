@@ -1,3 +1,5 @@
+## Programming Collective Intelligence approach ##
+
 from math import sqrt
 
 

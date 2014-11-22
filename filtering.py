@@ -1,3 +1,5 @@
+## Guide to Data Mining approach ##
+
 from math import sqrt
 
 users = {"Angelica": {"Blues Traveler": 3.5, "Broken Bells": 2.0,
