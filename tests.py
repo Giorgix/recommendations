@@ -47,6 +47,9 @@ critics = {
 
 
 class TestRecommendations(unittest.TestCase):
+    def setUp(self):
+        self.item_sim = recommendations.calculateSimilarItems(critics)
+
     def test_pearson_formula(self):
         self.assertAlmostEqual(
             recommendations.similarity_pearson(
@@ -65,8 +68,7 @@ class TestRecommendations(unittest.TestCase):
                                 (2.5309807037655645, 'Just My Luck')], 5)
 
     def test_getRecommendedItems(self):
-        itemsim = recommendations.calculateSimilarItems(critics)
-        self.assertAlmostEqual(recommendations.getRecommendedItems(critics, itemsim, 'Toby'),
+        self.assertAlmostEqual(recommendations.getRecommendedItems(critics, self.item_sim, 'Toby'),
                                [(3.182634730538922, 'The Night Listener'),
                                 (2.5983318700614575, 'Just My Luck'),
                                 (2.4730878186968837, 'Lady in the Water')], 5)
