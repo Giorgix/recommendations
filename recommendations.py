@@ -104,6 +104,26 @@ def similarity_pearson(data, person1, person2):
     return result
 
 
+# Tanimoto score is used to compare vectors with binary attributes
+# Ex. You have U users and T topics, each user either follows(1)
+# or not (0) a topic, then you have T vectors of 1s and 0s representing
+# each users follow preference of that topic. You can compare any two vectors
+# wich would give a number between 0 and 1 representing how often users follow
+# both topics and hence how "similar" they are.
+def similarity_tanimoto(vec1, vec2):
+    N = len(vec1)
+
+    assert N == len(vec2)
+
+    v1v2, v1v1, v2v2 = 0., 0., 0.
+    for i in xrange(N):
+        v1v2 += vec1[i] * vec2[i]
+        v1v1 += vec1[i] * vec1[i]
+        v2v2 += vec2[i] * vec2[i]
+
+    return v1v2 / (v1v1 + v2v2 - v1v2)
+
+
 # Returns the best matches for person from the data dictionary.
 # Number of results and similarity function are optional params.
 def topMatches(data, person, n=5, similarity=similarity_pearson):

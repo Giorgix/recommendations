@@ -55,6 +55,12 @@ class TestRecommendations(unittest.TestCase):
             recommendations.similarity_pearson(
                 critics, 'Lisa Rose', 'Gene Seymour'), 0.396059017191, 5)
 
+    def test_tanimoto_score(self):
+        vec1 = [0, 1, 1, 0, 0]
+        vec2 = [0, 0, 1, 1, 0]
+        self.assertAlmostEqual(recommendations.similarity_tanimoto(
+            vec1, vec2), 0.3333333333, 5)
+
     def test_topMatches_result(self):
         self.assertAlmostEqual(recommendations.topMatches(critics, 'Toby', n=3),
                                [(0.99124070716192991, 'Lisa Rose'),
