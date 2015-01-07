@@ -89,3 +89,24 @@ def hcluster(rows, distance=pearson):
         del clust[lowestpair[0]]
         clust.append(newcluster)
     return clust[0]
+
+
+def printclust(clust, labels=None, n=0):
+    # indent tomake hierachy layout
+    for i in range(n):
+        print ' ',
+    if clust.id < 0:
+        # negative id means that this is branch
+        print '-'
+    else:
+        # positive id means that this is an endpoint
+        if labels is None:
+            print clust.id
+        else:
+            print labels[clust.id]
+
+    # now print the right and left branches
+    if clust.left is not None:
+        printclust(clust.left, labels=labels, n=n + 1)
+    if clust.right is not None:
+        printclust(clust.right, labels=labels, n=n + 1)
