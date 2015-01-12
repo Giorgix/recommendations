@@ -1,4 +1,5 @@
 from math import sqrt
+from Pillow import Image, ImageDraw
 
 
 class bicluster:
@@ -110,3 +111,23 @@ def printclust(clust, labels=None, n=0):
         printclust(clust.left, labels=labels, n=n + 1)
     if clust.right is not None:
         printclust(clust.right, labels=labels, n=n + 1)
+
+
+def getheight(clust):
+    # Is this and endpoint? Then the height is just 1
+    if clust.left is None and clust.right is None:
+        return 1
+
+    # Otherwise the height is the same of the heights
+    # of each branch
+    return getheight(clust.left) + getheight(clust.right)
+
+
+def getdepth(clust):
+    # The distance of an endpoint is 0.0
+    if clust.left is None and clust.right is None:
+        return 0
+
+    # The distance of a branch is the grater of its two sides
+    # plus its own distance
+    return max(getdepth(clust.left), getdepth(clust.right)) + clust.distance
