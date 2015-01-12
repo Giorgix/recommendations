@@ -1,5 +1,5 @@
 from math import sqrt
-from Pillow import Image, ImageDraw
+from PIL import Image, ImageDraw
 
 
 class bicluster:
@@ -162,6 +162,19 @@ def drawnode(draw, clust, x, y, scaling, labels):
         # Line length
         ll = clust.distance * scaling
         # Vertical line from this cluster to children
-        draw.line((x, top + h1 / 2, x , bottom - h2 / 2), fill=(255, 0, 0))
+        draw.line((x, top + h1 / 2, x, bottom - h2 / 2), fill=(255, 0, 0))
 
         # Horizontal line to left item
+        draw.line((x, top + h1 / 2, x + ll, top + h1 / 2),
+                  fill=(255, 0, 0))
+
+        # Horizontal line to right item
+        draw.line((x, bottom - h2 / 2, x + ll, bottom - h2 / 2),
+                  fill=(255, 0, 0))
+
+        # Call the function to draw the left and right nodes
+        drawnode(draw, clust.left, x + ll, top + h1 / 2, scaling, labels)
+        drawnode(draw, clust.right, x + ll, bottom - h2 / 2, scaling, labels)
+    else:
+        # If this isand endpoint, draw the item label
+        draw.text((x + 5, y - 7), labels[clust.id], (0, 0, 0))
