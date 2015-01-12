@@ -131,3 +131,37 @@ def getdepth(clust):
     # The distance of a branch is the grater of its two sides
     # plus its own distance
     return max(getdepth(clust.left), getdepth(clust.right)) + clust.distance
+
+
+def drawdendrogram(clust, labels, jpeg='clusters.jpg'):
+    # height and width
+    h = getheight(clust) * 20
+    w = 1200
+    depth = getdepth(clust)
+
+    # width is fixed, so scale distances accordingly
+    scaling = float(w - 150) / depth
+
+    # Create a new image with a white background
+    img = Image.new('RGB', (w, h), (255, 255, 255))
+    draw = ImageDraw.Draw(img)
+
+    draw.line((0, h / 2, 10, h / 2), fill=(255, 0, 0))
+
+    # Draw the first node
+    drawnode(draw, clust, 10, (h / 2), scaling, labels)
+    img.save(jpeg, 'JPEG')
+
+
+def drawnode(draw, clust, x, y, scaling, labels):
+    if clust.id < 0:
+        h1 = getheight(clust.left) * 20
+        h2 = getheight(clust.right) * 20
+        top = y - (h1 + h2) / 2
+        bottom = y + (h1 + h2) / 2
+        # Line length
+        ll = clust.distance * scaling
+        # Vertical line from this cluster to children
+        draw.line((x, top + h1 / 2, x , bottom - h2 / 2), fill=(255, 0, 0))
+
+        # Horizontal line to left item
