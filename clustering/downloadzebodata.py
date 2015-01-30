@@ -14,13 +14,13 @@ currentuser = 0
 for i in range(1, 51):
     # URL for the want search page
     c = urllib2.urlopen(
-        'http://member.zebo.com/Main?event_key=USERSEARCH&wiowiw=wiw&keyword=car&page=%d'
+        'http://www.segundamano.es/anuncios-madrid/?ca=28_s&x=1&w=1&c=0&o=%d'
         % (i))
     soup = BeautifulSoup(c.read())
-    for td in soup('td'):
+    for li in soup('li'):
         # Find table cells of bgverdanasmall class
-        if ('class' in dict(td.attrs) and td['class'] == 'bgverdanasmall'):
-            items = [re.sub(chare, '', a.contents[0].lower()).strip() for a in td('a')]
+        if ('class' in dict(li.attrs) and li['class'] == 'subject'):
+            items = [re.sub(chare, '', a.contents[0].lower()).strip() for a in li('a')]
             for item in items:
                 # Remove extra words
                 txt = ' '.join([t for t in item.split(' ') if t not in dropwords])
@@ -31,7 +31,7 @@ for i in range(1, 51):
             currentuser += 1
 
 
-out = file('zebo.txt', 'w')
+out = file('segundamano.txt', 'w')
 out.write('Item')
 for user in range(0, currentuser):
     out.write('\tU%d' % user)
