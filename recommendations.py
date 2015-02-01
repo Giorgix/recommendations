@@ -54,6 +54,7 @@ critics = {
 def similarity_distance(data, person1, person2):
     # Get the list of shared_items
     shared_items = {}
+    sum_of_squares = 0
     for item in data[person1]:
         if item in data[person2]:
             shared_items[item] = 1
@@ -63,8 +64,9 @@ def similarity_distance(data, person1, person2):
         return 0
 
     # Add up the squares of all the differences
-    sum_of_squares = sum([pow(data[person1][item] - data[person2][item], 2)
-                          for item in data[person1] if item in data[person2]])
+    for item in data[person1]:
+        if item in data[person2]:
+            sum_of_squares += pow(data[person1][item] - data[person2][item], 2)
     return 1 / (1 + sum_of_squares)
 
 
