@@ -84,17 +84,20 @@ def similarity_pearson(data, person1, person2):
     if n == 0:
         return 0
 
-    # Add up all the preferences
-    sum1 = sum([data[person1][item] for item in shared_items])
-    sum2 = sum([data[person2][item] for item in shared_items])
-
-    # Sum up the squares
-    sum1Sq = sum([pow(data[person1][item], 2) for item in shared_items])
-    sum2Sq = sum([pow(data[person2][item], 2) for item in shared_items])
-
-    # Sum up the products
-    pSum = sum([data[person1][item] *
-                data[person2][item] for item in shared_items])
+    sum1 = 0
+    sum2 = 0
+    sum1Sq = 0
+    sum2Sq = 0
+    pSum = 0
+    for item in shared_items:
+        # Add up all the preferences
+        sum1 += data[person1][item]
+        sum2 += data[person2][item]
+        # Sum up the squares
+        sum1Sq += pow(data[person1][item], 2)
+        sum2Sq += pow(data[person2][item], 2)
+        # Sum up the products
+        pSum += data[person1][item] * data[person2][item]
 
     # Calculate Pearson Score
     numerator = pSum - (sum1 * sum2 / n)
