@@ -132,8 +132,11 @@ def similarity_tanimoto(vec1, vec2):
 # Returns the best matches for person from the data dictionary.
 # Number of results and similarity function are optional params.
 def topMatches(data, person, n=5, similarity=similarity_pearson):
-    scores = [(similarity(data, person, other), other)
-              for other in data if other != person]
+    scores = []
+    for other in data:
+        if other != person:
+            # Append the tuple with (value, other) to the scores list
+            scores.append((similarity(data, person, other), other))
 
     # Sort the list so the highest scores appear at the top
     scores.sort()
